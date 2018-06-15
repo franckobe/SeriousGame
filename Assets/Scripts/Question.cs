@@ -8,16 +8,18 @@ namespace DefaultNamespace
     {
         public string label;
         public List<Response> responses;
+        public string ordre;
 
         public Question()
         {
             
         }
 
-        public Question(string label, List<Response> responses)
+        public Question(string label, List<Response> responses, string ordre)
         {
             this.label = label;
             this.responses = responses;
+            this.ordre = ordre;
         }
     }
 }

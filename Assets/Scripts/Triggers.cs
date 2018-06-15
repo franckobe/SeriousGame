@@ -4,11 +4,12 @@ using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class Triggers : MonoBehaviour
 {
 
-	GameObject m_Panel;
+	public GameObject m_Panel;
 	private Text m_question;
 	private Text m_reponse_a;
 	private Text m_reponse_b;
@@ -19,7 +20,6 @@ public class Triggers : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		m_Panel = GameObject.Find("Panel");
 		m_question = GameObject.Find("question").GetComponent<Text>();
 		m_reponse_a = GameObject.Find("reponse_A").GetComponentInChildren<Text>();
 		m_reponse_b = GameObject.Find("reponse_B").GetComponentInChildren<Text>();
@@ -40,13 +40,18 @@ public class Triggers : MonoBehaviour
 		int nb = int.Parse(name.Split("_".ToCharArray())[1]);
 		if (name.StartsWith("trigger"))
 		{
-			FillQuestion(_questionList.questions[nb]);
-			m_Panel.SetActive(true);
+			if (nb < _questionList.questions.Count)
+			{
+				FillQuestion(_questionList.questions[nb]);
+				m_Panel.SetActive(true);
+				GetComponent<ThirdPersonUserControl>().canMove = false;
+			}
 		}
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
+		other.isTrigger = false;
 		m_Panel.SetActive(false);
 	}
 
